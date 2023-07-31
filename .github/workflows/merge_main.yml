@@ -10,7 +10,7 @@ env:
   TF_INPUT: false
   
 jobs: 
-  pr-infra-check:
+  merge-main-apply:
     runs-on: ubuntu-latest
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     # Set the working directory to vnet for the config files
@@ -45,7 +45,7 @@ jobs:
     
     # On merge to main apply changes
     - name: Terraform Apply
-      id: plan
+      id: apply
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}

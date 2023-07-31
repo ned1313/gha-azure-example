@@ -32,6 +32,10 @@ The code in the `setup` directory will create the following for you:
 
 You will need to get a GitHub personal access token (PAT) that Terraform can use for authentication to your GitHub account. Here's a [link showing how to do exactly that](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
+The token needs to be able to do the following:
+
+* repo - Full control of repositories
+
 Once you've got your PAT from GitHub, run the following from the root of the repository:
 
 ```bash
@@ -54,28 +58,26 @@ terraform apply -auto-approve # Because we live on the edge!
 
 At this point your GitHub repository is all set for you to kick off a GitHub Action. Actions are triggered by any `push` or `pull_request` event that happens in the repo. Pushing an updated version from your local desktop should trigger it. The Action will do the following:
 
-* Push on non-main branch
+* Push on non-main branch (push.yml)
   * Pull the repo to the runner
   * Install Terraform
   * Initialize Terraform with remote state
   * Check formatting with `terraform fmt`
   * Check syntax with `terraform validate`
 
-* Pull Requests
-  * Check formatting and syntax again
+* Pull Requests (pr.yml)
   * Generate a plan of the changes with `terraform plan`
-  * Perform static code analysis with Checkov
-  * Add the results of the plan and code anlysis to the pull request as a comment
+  * Add the results of the plan to the pull request as a comment
 
-* Push on main branch (AKA a merge)
+* Push on main branch (merge_main.yml)
   * Run a Terraform apply with `-auto-approve` to update the target environment
 
 Feel free to mess around with the different events to manipulate the environment.
 
 ## Cleanup
 
-When you're done with this experiment, you've got two things to cleanup. The environment deployed by GitHub Actions and the supporting environment deployed from `remote_setup`. Start by either removing the GitHubs actions `terraform.yml` file or deleting the repository. Then delete the resource group  for the Web App using the Azure CLI or Portal.
+When you're done with this experiment, you've got two things to cleanup. The environment deployed by GitHub Actions and the supporting environment deployed from `setup`. Start by either removing the GitHubs actions files or deleting the repository. Then delete the resource group for the Vnet using the Azure CLI or Portal.
 
-From the `remote_setup` directory run `terraform destroy` to delete all supporting resources.
+From the `setup` directory run `terraform destroy` to delete all supporting resources.
 
 And that's it! You've cleaned up.

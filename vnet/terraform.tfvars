@@ -13,6 +13,6 @@ subnets = {
     address_prefixes = ["10.42.0.0/24"]
   }
   subnet2 = {
-    address_prefixes = ["10.42.1.0/24"]
+    address_prefixes = ["10.42.2.0/24"]
   }
 }

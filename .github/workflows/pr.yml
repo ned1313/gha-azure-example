@@ -9,6 +9,11 @@ env:
   TF_LOG: INFO
   TF_INPUT: false
 
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
 jobs: 
   pr-infra-check:
     runs-on: ubuntu-latest
@@ -71,7 +76,7 @@ jobs:
           
           </details>
           
-          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
             
           github.rest.issues.createComment({
             issue_number: context.issue.number,

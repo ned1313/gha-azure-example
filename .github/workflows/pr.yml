@@ -9,6 +9,11 @@ env:
   TF_LOG: INFO
   TF_INPUT: false
 
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
 jobs: 
   pr-infra-check:
     runs-on: ubuntu-latest
